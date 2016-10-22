@@ -3,6 +3,8 @@ import './App.css';
 
 import Table from './components/Timesheet/Table';
 import NewEntryButton from './components/Timesheet/NewEntryButton';
+import GoalTime from './components/TimeDashboard/GoalTime'
+import CompletedTime from './components/TimeDashboard/CompletedTime';
 
 class App extends Component {
   constructor(props) {
@@ -38,8 +40,12 @@ class App extends Component {
           </thead>
           <tbody>
             <tr>
-              <td>08:50</td>
-              <td>05:00</td>
+              <td>
+                <GoalTime value={'08:48'} />
+              </td>
+              <td>
+                <CompletedTime entries={this.state.entries} />
+              </td>
               <td>03:48</td>
               <td>18:00</td>
             </tr>
