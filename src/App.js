@@ -6,6 +6,7 @@ import NewEntryButton from './components/Timesheet/NewEntryButton';
 import GoalTime from './components/TimeDashboard/GoalTime'
 import CompletedTime from './components/TimeDashboard/CompletedTime';
 import RemainingTime from './components/TimeDashboard/RemainingTime';
+import NextTime from './components/TimeDashboard/NextTime';
 
 class App extends Component {
   constructor(props) {
@@ -13,7 +14,7 @@ class App extends Component {
 
     this.state = {
       entries: [],
-      goalTime: '08:00:00'
+      goalTime: '00:00:30'
     };
 
     this.handleOnEntriesUpdate = this.handleOnEntriesUpdate.bind(this);
@@ -25,9 +26,11 @@ class App extends Component {
 
     let completedTimeRef = this.refs.completedTime;
     let remainingTimeRef = this.refs.remainingTime;
-    let completedTime = completedTimeRef.calcEntriesTime();
+    let nextTime = this.refs.nextTime;
 
-    remainingTimeRef.calcRemainingTime(completedTime);
+    let completedTime = completedTimeRef.calcEntriesTime();
+    let remainingTime = remainingTimeRef.calcRemainingTime(completedTime);
+    nextTime.calcNextTime(remainingTime);
   }
 
   render() {
@@ -57,7 +60,9 @@ class App extends Component {
               <td>
                 <RemainingTime goalTime={this.state.goalTime} ref="remainingTime" />
               </td>
-              <td>18:00</td>
+              <td>
+                <NextTime ref="nextTime" />
+              </td>
             </tr>
           </tbody>
         </table>

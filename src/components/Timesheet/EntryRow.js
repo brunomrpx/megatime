@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import Time from '../../helpers/Time';
 
 class EntryRow extends Component {
   constructor(props) {
@@ -12,14 +13,9 @@ class EntryRow extends Component {
     }
 
     let date = new Date(JSON.parse(time));
-    let hours = date.getHours();
-    let minutes = date.getMinutes();
-    let seconds = date.getSeconds();
+    let formatedDate = Time.getTimeFromDate(date);
 
-    hours = hours >= 10 ? hours : ('0' + hours);
-    minutes = minutes >= 10 ? minutes : ('0' + minutes);
-
-    return hours + ':' + minutes + ':' + seconds;
+    return formatedDate;
   }
 
   render() {

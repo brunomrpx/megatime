@@ -40,11 +40,16 @@ class RemainingTime extends Component {
       null, null, null, gHours, gMinutes, gSeconds
     );
 
-    let remainingTime = Time.msToTime(goalTimeDate - completedTimeDate);
+    let goalTimeInMs = goalTimeDate - completedTimeDate;
+    goalTimeInMs = goalTimeInMs > 0 ? goalTimeInMs : 0;
+
+    let remainingTime = Time.msToTime(goalTimeInMs);
 
     this.setState({
       remainingTime: remainingTime
     });
+
+    return remainingTime;
   }
 
   render() {
