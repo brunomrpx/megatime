@@ -14,11 +14,12 @@ class EntryRow extends Component {
     let date = new Date(JSON.parse(time));
     let hours = date.getHours();
     let minutes = date.getMinutes();
+    let seconds = date.getSeconds();
 
     hours = hours >= 10 ? hours : ('0' + hours);
     minutes = minutes >= 10 ? minutes : ('0' + minutes);
 
-    return hours + ':' + minutes;
+    return hours + ':' + minutes + ':' + seconds;
   }
 
   render() {
