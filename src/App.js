@@ -5,21 +5,29 @@ import Table from './components/Timesheet/Table';
 import NewEntryButton from './components/Timesheet/NewEntryButton';
 import GoalTime from './components/TimeDashboard/GoalTime'
 import CompletedTime from './components/TimeDashboard/CompletedTime';
+import RemainingTime from './components/TimeDashboard/RemainingTime';
 
 class App extends Component {
   constructor(props) {
     super(props);
 
     this.state = {
-      entries: []
+      entries: [],
+      goalTime: '08:00:00'
     };
 
-    this.updateEntries = this.updateEntries.bind(this);
+    this.handleOnEntriesUpdate = this.handleOnEntriesUpdate.bind(this);
   }
 
-  updateEntries(entries) {
-    console.log('updating entries', entries);
+  handleOnEntriesUpdate(entries) {
+    console.log('updating entries: ', entries);
     this.setState({ entries: entries });
+
+    let completedTimeRef = this.refs.completedTime;
+    let remainingTimeRef = this.refs.remainingTime;
+    let completedTime = completedTimeRef.calcEntriesTime();
+
+    remainingTimeRef.calcRemainingTime(completedTime);
   }
 
   render() {
@@ -41,19 +49,21 @@ class App extends Component {
           <tbody>
             <tr>
               <td>
-                <GoalTime value={'08:48'} />
+                <GoalTime value={this.state.goalTime} />
               </td>
               <td>
-                <CompletedTime entries={this.state.entries} />
+                <CompletedTime entries={this.state.entries} ref="completedTime" />
               </td>
-              <td>03:48</td>
+              <td>
+                <RemainingTime goalTime={this.state.goalTime} ref="remainingTime" />
+              </td>
               <td>18:00</td>
             </tr>
           </tbody>
         </table>
         <br/>
         <br/>
-        <NewEntryButton entries={this.state.entries} onEntriesUpdate={this.updateEntries} />
+        <NewEntryButton entries={this.state.entries} onEntriesUpdate={this.handleOnEntriesUpdate} />
         <br/>
         <br/>
         <Table entries={this.state.entries} />

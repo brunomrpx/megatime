@@ -1,14 +1,24 @@
 import React, { Component } from 'react';
 
-class CompletedTime extends Component {
-  render() {
-    console.log('entries: ', this.props.entries);
+import Time from '../../helpers/Time';
 
+class CompletedTime extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      completedTime: null
+    };
+
+    this.calcEntriesTime = this.calcEntriesTime.bind(this);
+  }
+
+  calcEntriesTime() {
     let entries = this.props.entries;
 
-    let timeInMiliseconds = entries.reduce((prev, e) => {
+    let milliseconds = entries.reduce((prev, e) => {
       if (!e.start || !e.stop) {
-        return 0;
+        return prev;
       }
 
       let startDate = new Date(JSON.parse(e.start));
@@ -17,14 +27,23 @@ class CompletedTime extends Component {
       return prev + (stopDate - startDate);
     }, 0);
 
+    let completedTime = Time.msToTime(milliseconds);
+
+    this.setState({ completedTime: completedTime });
+
+    return completedTime;
+  }
+
+
+  render() {
     return (
-      <div>{timeInMiliseconds}</div>
+      <div>{this.state.completedTime ? this.state.completedTime : '00:00:00'}</div>
     );
   }
 }
 
 CompletedTime.defaultProps = {
-  entries: [],
+  entries: []
 };
 
 export default CompletedTime;
