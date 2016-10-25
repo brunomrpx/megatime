@@ -15,7 +15,7 @@ class App extends Component {
 
     this.state = {
       entries: LocalStorage.get('entries') || [],
-      goalTime: '00:00:30',
+      goalTime: LocalStorage.get('goalTime') || '00:00:00',
       nextTime: LocalStorage.get('nextTime') || null
     };
 
@@ -23,8 +23,10 @@ class App extends Component {
 
     this.handleOnEntriesUpdate = this.handleOnEntriesUpdate.bind(this);
     this.handleOnUpdateNextTime = this.handleOnUpdateNextTime.bind(this);
+    this.handleOnGoalTimeUpdate = this.handleOnGoalTimeUpdate.bind(this);
     this.updateEntries = this.updateEntries.bind(this);
     this.updateNextTime = this.updateNextTime.bind(this);
+    this.updateGoalTime = this.updateGoalTime.bind(this);
     this.updateTimeDashboard= this.updateTimeDashboard.bind(this);
     this.startOrClearInterval = this.startOrClearInterval.bind(this);
   }
@@ -45,6 +47,12 @@ class App extends Component {
     LocalStorage.set('nextTime', nextTime);
   }
 
+  updateGoalTime(goalTime) {
+    console.log('updating goal time: ', goalTime);
+    this.setState({ goalTime: goalTime });
+    LocalStorage.set('goalTime', goalTime);
+  }
+
   handleOnUpdateNextTime(nextTime) {
     let entries = this.state.entries;
     let lastEntry = entries[entries.length - 1];
@@ -52,6 +60,10 @@ class App extends Component {
     if (!lastEntry.stop) {
       this.updateNextTime(nextTime);
     }
+  }
+  
+  handleOnGoalTimeUpdate(newGoalTime) {
+    this.updateGoalTime(newGoalTime);
   }
 
   handleOnEntriesUpdate(entries) {
@@ -108,7 +120,7 @@ class App extends Component {
           <tbody>
             <tr>
               <td>
-                <GoalTime value={this.state.goalTime} />
+                <GoalTime value={this.state.goalTime} onGoalTimeUpdate={this.handleOnGoalTimeUpdate} />
               </td>
               <td>
                 <CompletedTime entries={this.state.entries} ref="completedTime" />
