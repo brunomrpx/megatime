@@ -13,16 +13,26 @@ class CompletedTime extends Component {
     this.calcEntriesTime = this.calcEntriesTime.bind(this);
   }
 
-  calcEntriesTime() {
+  calcEntriesTime(estimate = false) {
     let entries = this.props.entries;
+    let stopDate, startDate;
 
     let milliseconds = entries.reduce((prev, e) => {
-      if (!e.start || !e.stop) {
+      if (!e.start) {
         return prev;
       }
 
-      let startDate = new Date(JSON.parse(e.start));
-      let stopDate = new Date(JSON.parse(e.stop));
+      if (!e.stop) {
+        if (estimate) {
+          stopDate = new Date();
+        } else {
+          return prev;
+        }
+      } else {
+        stopDate = new Date(JSON.parse(e.stop));
+      }
+
+      startDate = new Date(JSON.parse(e.start));
 
       return prev + (stopDate - startDate);
     }, 0);

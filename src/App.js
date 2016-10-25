@@ -17,19 +17,39 @@ class App extends Component {
       goalTime: '00:00:30'
     };
 
+    this.interval = null;
+
     this.handleOnEntriesUpdate = this.handleOnEntriesUpdate.bind(this);
+    this.updateTimeDashboard= this.updateTimeDashboard.bind(this);
   }
 
   handleOnEntriesUpdate(entries) {
     console.log('updating entries: ', entries);
     this.setState({ entries: entries });
 
+    let lastEntry = entries[entries.length - 1];
+
+    if (lastEntry && !lastEntry.stop) {
+      if (!this.interval) {
+        console.log('starting interval');
+        this.interval = setInterval(this.updateTimeDashboard, 1000);
+      }
+    } else {
+      console.log('clearing interval');
+      clearInterval(this.interval);
+      this.interval = null;
+    }
+  }
+
+  updateTimeDashboard() {
+    console.log('updating dashboard time');
+
     let completedTimeRef = this.refs.completedTime;
     let remainingTimeRef = this.refs.remainingTime;
     let nextTime = this.refs.nextTime;
-
-    let completedTime = completedTimeRef.calcEntriesTime();
+    let completedTime = completedTimeRef.calcEntriesTime(true);
     let remainingTime = remainingTimeRef.calcRemainingTime(completedTime);
+
     nextTime.calcNextTime(remainingTime);
   }
 
