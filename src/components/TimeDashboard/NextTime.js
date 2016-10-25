@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import Time from '../../helpers/Time';
 
 class NextTime extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      nextTime: null
-    };
-  }
-
   calcNextTime(remainingTime) {
     if (remainingTime === '00:00:00') {
       return;
@@ -27,21 +20,24 @@ class NextTime extends Component {
 
     let nextTime = Time.getTimeFromDate(now);
 
-    this.setState({
-      nextTime: nextTime
-    });
+    if (this.props.onUpdateNextTime) {
+      this.props.onUpdateNextTime(nextTime);
+    }
 
     return nextTime;
   }
 
   render() {
     return (
-      <div>{ this.state.nextTime ? this.state.nextTime : '00:00:00' }</div>
+      <div>{ this.props.nextTime ? this.props.nextTime : '00:00:00' }</div>
     );
   }
 }
 
-NextTime.defaultProps = {};
+NextTime.defaultProps = {
+  nextTime: null,
+  onUpdateNextTime: null
+};
 
 export default NextTime;
 
