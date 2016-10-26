@@ -3,19 +3,39 @@ import React, { Component } from 'react';
 import EntryRow from './EntryRow';
 
 class Table extends Component {
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      entries: this.props.entries
+    };
+
+    this.handleDeleteRow = this.handleDeleteRow.bind(this);
+  }
+
+  handleDeleteRow(event, rowIndex) {
+    let entries = this.state.entries;
+    entries.splice(rowIndex, 1);
+
+    this.setState({ entries: entries });
+    if (this.props.onEntriesUpdate) {
+      this.props.onEntriesUpdate(entries);
+    }
+  }
+
   render() {
     let rows;
 
-    if (this.props.entries.length > 0) {
+    if (this.state.entries.length > 0) {
       rows = this.props.entries.map((e, i) => {
         return (
-          <EntryRow start={e.start} stop={e.stop} key={i} />
+          <EntryRow start={e.start} stop={e.stop} key={i} onDeleteRow={(event) => this.handleDeleteRow(event, i)} />
         );
       })
     } else {
       rows = (
         <tr>
-          <td colSpan="2">No entries found</td>
+          <td colSpan="3">No entries found</td>
         </tr>
       );
     }
@@ -24,7 +44,7 @@ class Table extends Component {
       <table>
         <thead>
           <tr>
-            <th colSpan="2">Timesheet</th>
+            <th colSpan="3">Timesheet</th>
           </tr>
           <tr>
             <th>Start</th>
@@ -40,7 +60,8 @@ class Table extends Component {
 }
 
 Table.defaultProps = {
-  entries: []
+  entries: [],
+  onEntriesUpdate: null
 };
 
 export default Table;

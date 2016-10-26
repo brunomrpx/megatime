@@ -23,6 +23,7 @@ class EntryRow extends Component {
       <tr>
         <td>{ this.formatTime(this.props.start) }</td>
         <td>{ this.formatTime(this.props.stop) }</td>
+        <td><button onClick={this.props.onDeleteRow}>Delete</button></td>
       </tr>
     );
   }
@@ -30,7 +31,9 @@ class EntryRow extends Component {
 
 EntryRow.defaultProps = {
   start: null,
-  stop: null
+  stop: null,
+  onDeleteRow: null
 };
 
 export default EntryRow;
+

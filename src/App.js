@@ -57,11 +57,11 @@ class App extends Component {
     let entries = this.state.entries;
     let lastEntry = entries[entries.length - 1];
 
-    if (!lastEntry.stop) {
+    if (lastEntry && !lastEntry.stop) {
       this.updateNextTime(nextTime);
     }
   }
-  
+
   handleOnGoalTimeUpdate(newGoalTime) {
     this.updateGoalTime(newGoalTime);
   }
@@ -139,7 +139,7 @@ class App extends Component {
         <NewEntryButton entries={this.state.entries} onEntriesUpdate={this.handleOnEntriesUpdate} />
         <br/>
         <br/>
-        <Table entries={this.state.entries} />
+        <Table entries={this.state.entries} onEntriesUpdate={this.handleOnEntriesUpdate} />
       </div>
     );
   }
