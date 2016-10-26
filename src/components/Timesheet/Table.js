@@ -11,6 +11,7 @@ class Table extends Component {
     };
 
     this.handleDeleteRow = this.handleDeleteRow.bind(this);
+    this.handleOnUpdateRow = this.handleOnUpdateRow.bind(this);
   }
 
   handleDeleteRow(event, rowIndex) {
@@ -23,13 +24,24 @@ class Table extends Component {
     }
   }
 
+  handleOnUpdateRow(row, rowIndex) {
+    console.log('-> handle on update row: ', this.state.entries);
+    let entries = this.state.entries;
+    let entry = entries[rowIndex];
+    let property = row.start ? 'start' : 'stop';
+
+    entry[property] = row[property];
+
+    this.props.onEntriesUpdate(this.state.entries);
+  }
+
   render() {
     let rows;
 
     if (this.state.entries.length > 0) {
       rows = this.props.entries.map((e, i) => {
         return (
-          <EntryRow start={e.start} stop={e.stop} key={i} onDeleteRow={(event) => this.handleDeleteRow(event, i)} />
+          <EntryRow start={e.start} stop={e.stop} key={i} onDeleteRow={(event) => this.handleDeleteRow(event, i)} onUpdateRow={(event) => this.handleOnUpdateRow(event, i)} />
         );
       })
     } else {
