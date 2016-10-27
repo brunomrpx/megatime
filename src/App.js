@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './App.css';
+import './reset.css';
 
 import Table from './components/Timesheet/Table';
 import NewEntryButton from './components/Timesheet/NewEntryButton';
