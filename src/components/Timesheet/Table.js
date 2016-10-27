@@ -53,7 +53,7 @@ class Table extends Component {
     }
 
     return (
-      <table>
+      <table className="timesheet">
         <thead>
           <tr>
             <th colSpan="3">Timesheet</th>

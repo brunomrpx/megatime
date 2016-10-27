@@ -23,7 +23,7 @@ class NewEntryButtonRow extends Component {
 
   render() {
     return (
-      <button onClick={this.addNewEntry}>Inserir Marcação</button>
+      <button className="button" onClick={this.addNewEntry}>Insert Entry</button>
     );
   }
 }

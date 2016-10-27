@@ -92,20 +92,20 @@ class EntryRow extends Component {
     if (!this.state.editingStart) {
       startElement = <span>{startValue}</span>;
     } else {
-      startElement = <input defaultValue={startValue} ref="startInputElement" onBlur={this.finishEditingStartTime} />
+      startElement = <input type="text" defaultValue={startValue} ref="startInputElement" onBlur={this.finishEditingStartTime} />
     }
 
     if (!this.state.editingStop) {
       stopElement = <span>{stopValue}</span>;
     } else {
-      stopElement = <input defaultValue={stopValue} ref="stopInputElement" onBlur={this.finishEditingStopTime} />
+      stopElement = <input type="text" defaultValue={stopValue} ref="stopInputElement" onBlur={this.finishEditingStopTime} />
     }
 
     return (
-      <tr>
+      <tr className="entry-row">
         <td onDoubleClick={this.startEditingStartTime}>{startElement}</td>
         <td onDoubleClick={this.startEditingStopTime}>{stopElement}</td>
-        <td><button onClick={this.props.onDeleteRow}>Delete</button></td>
+        <td><button className="button" onClick={this.props.onDeleteRow}>Delete</button></td>
       </tr>
     );
   }

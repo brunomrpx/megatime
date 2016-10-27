@@ -104,17 +104,22 @@ class App extends Component {
   render() {
     return (
       <div>
-        <h1>Megaquality</h1>
-        <table>
+        <h1 className="logo">Megaquality</h1>
+        <div className="padding">
+          <NewEntryButton entries={this.state.entries} onEntriesUpdate={this.handleOnEntriesUpdate} />
+        </div>
+        <table className="dashboard-time">
           <thead>
             <tr>
-              <th colSpan="4">Marcações</th>
+              <th colSpan="4">
+                <h2 className="title">Dashboard</h2>
+              </th>
             </tr>
             <tr>
-              <th>Meta</th>
-              <th>Tempo marcado</th>
-              <th>Tempo restante</th>
-              <th>Proxima marcação</th>
+              <th>Goal time</th>
+              <th>Completed time</th>
+              <th>Remaining time</th>
+              <th>Next time</th>
             </tr>
           </thead>
           <tbody>
@@ -136,7 +141,6 @@ class App extends Component {
         </table>
         <br/>
         <br/>
-        <NewEntryButton entries={this.state.entries} onEntriesUpdate={this.handleOnEntriesUpdate} />
         <br/>
         <br/>
         <Table entries={this.state.entries} onEntriesUpdate={this.handleOnEntriesUpdate} />
